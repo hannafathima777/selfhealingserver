@@ -42,13 +42,13 @@ def is_anomaly(cpu: float, ram: float, disk: float, model: IsolationForest = Non
         prediction = model.predict(sample)
         # IsolationForest: -1 = anomaly, 1 = normal
         result = prediction[0] == -1
-        log_event("ANOMALY", f"ML Detection — CPU:{cpu} RAM:{ram} DISK:{disk} → {'ANOMALY' if result else 'Normal'}")
+        log_event("ANOMALY", f"ML Detection — CPU:{cpu} RAM:{ram} DISK:{disk} -> {'ANOMALY' if result else 'Normal'}")
         return result
     else:
         # Fallback: simple threshold check
         from app.config import CPU_THRESHOLD, RAM_THRESHOLD, DISK_THRESHOLD
         result = cpu > CPU_THRESHOLD or ram > RAM_THRESHOLD or disk > DISK_THRESHOLD
-        log_event("ANOMALY", f"Threshold Detection — CPU:{cpu} RAM:{ram} DISK:{disk} → {'ANOMALY' if result else 'Normal'}")
+        log_event("ANOMALY", f"Threshold Detection — CPU:{cpu} RAM:{ram} DISK:{disk} -> {'ANOMALY' if result else 'Normal'}")
         return result
 
 
