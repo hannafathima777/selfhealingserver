@@ -33,6 +33,7 @@ def monitor_cycle(model):
 
     # 2. Health check
     health = get_health_status(TARGET_CONTAINER)
+    
 
     # 3. Anomaly detection
     anomaly = is_anomaly(cpu, ram, disk, model)

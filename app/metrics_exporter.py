@@ -7,6 +7,10 @@ app = Flask(__name__)
 cpu_gauge = Gauge("cpu_usage", "CPU usage")
 ram_gauge = Gauge("ram_usage", "RAM usage")
 disk_gauge = Gauge("disk_usage", "Disk usage")
+restart_count_gauge = Gauge(
+    "restart_count",
+    "Number of self-healing restarts"
+)
 
 
 def collect_metrics():
@@ -17,6 +21,14 @@ def collect_metrics():
     cpu_gauge.set(cpu)
     ram_gauge.set(ram)
     disk_gauge.set(disk)
+
+    try:
+        with open("data/restart_count.txt", "r") as f:
+            restart_count = int(f.read().strip())
+    except:
+        restart_count = 0
+
+    restart_count_gauge.set(restart_count)
 
 
 @app.route("/metrics")
